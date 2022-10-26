@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Latte and Code{% endblock %}
+
+{% block body %}
+    <h1>Latte and Code</h1>
+
+    <ul>
+      <li>
+        <a href="{{ path('app_login_form')}}">Iniciar sesión</a>
+      </li>
+      <li>
+        <a href="{{ path('app_login_link')}}">Iniciar sesión con enlace</a>
+      </li>
+      <li>
+        <a href="{{ path('app_register')}}">Registro</a>
+      </li>
+    </ul>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<h1>Perfil</h1>
+<p>{{ app.user.email }}</p>
+<p>{{ app.user.name }}</p>
+<p><a href="{{ path('app_logout')}}">Cerrar sesión</a></p>
+{% endblock %}

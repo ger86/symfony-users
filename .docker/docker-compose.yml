@@ -1,0 +1,46 @@
+version: "3"
+
+services:
+    db:
+        image: mysql:8.0.24
+        platform: linux/x86_64
+        command: --default-authentication-plugin=mysql_native_password
+        volumes:
+            - "db_app:/var/lib/mysql"
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        ports:
+            - 3306:3306
+        networks:
+            - symfony_users
+    php:
+        build:
+            context: ./php
+            args:
+                TIMEZONE: ${TIMEZONE}
+        volumes:
+            - symfony_users_sync:/var/www/symfony/
+        networks:
+            - symfony_users
+    nginx:
+        build:
+            context: ./nginx
+        volumes:
+            - symfony_users_sync:/var/www/symfony/
+        ports:
+            - 80:80
+        networks:
+            - symfony_users
+        env_file:
+            - .env.nginx.local
+
+volumes:
+    symfony_users_sync:
+        external: true
+    db_app:
+
+networks:
+    symfony_users:
